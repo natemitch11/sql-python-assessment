@@ -56,3 +56,68 @@ join employee e on c.support_rep_id = e.employee_id;
 select al.title album_title, ar.name artist_name
 from album al 
 join artist ar on al.artist_id = ar.artist_id;
+
+
+--EXTRA CREDIT---------------------------------------------------------------------------------
+
+-- Artist Table
+-- Select 10 artists in reverse alphabetical order.
+select * from artist
+order by name desc
+limit 10;
+-- Select all artists that start with the word ‘Black’.
+select * from artist
+where name like 'Black%';
+-- Select all artists that contain the word ‘Black’.
+select * from artist
+where name like '%Black%';
+
+-- Employee Table
+-- Find the birthdate for the youngest employee.
+select * from employee
+order by birth_date desc
+limit 1;
+
+--or--
+select max(birth_date) from employee
+
+-- Find the birthdate for the oldest employee.
+select * from employee
+order by birth_date
+limit 1;
+
+--or--
+select min(birth_date) from employee
+
+-- Invoice Table
+-- Count how many orders were in CA, TX, or AZ (use IN).
+select count(*) from invoice where billing_state in('CA', 'TX', 'AZ');
+-- Get the average total of the orders.
+select avg(total) from invoice;
+
+-- More Join Queries
+-- Get all playlist_track track_ids where the playlist name is Music.
+select pl.track_id
+from playlist_track pl
+join playlist p on pl.playlist_id = p.playlist_id
+where p.name = 'Music';
+-- Get all track names for playlist_id 5.
+select tr.name
+from track tr
+join playlist_track p on p.track_id = tr.track_id
+where p.playlist_id = 5;
+-- Get all track names and the playlist name that they’re on ( 2 joins ).
+select tr.name track_name, pl.name playlist_name
+from track tr
+join playlist_track p on p.track_id = tr.track_id
+join playlist pl on pl.playlist_id = p.playlist_id;
+-- Get all track names and album titles that are the genre Alternative & Punk ( 2 joins ).
+select tr.name track_name, al.title album_title
+from track tr
+join genre g on tr.genre_id = g.genre_id
+join album al on tr.album_id = al.album_id
+where g.genre_id in(
+	select genre_id
+    from genre
+    where genre.name in ('Alternative', 'Punk')
+);

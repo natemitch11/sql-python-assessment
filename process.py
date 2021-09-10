@@ -13,3 +13,14 @@ def sales_reports(log_file):
 
 # this line is calling the function and passing in the single argument variable
 sales_reports(log_file)
+
+
+def over_10_melons(log_file):
+    for line in log_file:
+        line = line.rstrip().split(' ')
+        count = int(line[2])
+        if count > 10:
+            print(line)
+
+
+over_10_melons(log_file)
